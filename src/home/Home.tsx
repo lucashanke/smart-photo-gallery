@@ -8,7 +8,7 @@ const Home: React.FunctionComponent = () => (
             <img src={logo} className={styles.logo} alt="logo" />
             <p>
                 Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+            </p>
             <a
                 className={styles.link}
                 href="https://reactjs.org"
