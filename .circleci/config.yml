@@ -1,31 +1,27 @@
-# CircleCI Firebase Deployment Config
-version: 2
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 jobs:
-  build:
-    docker:
-      - image: circleci/node:10
-    working_directory: ~/project
+  build-and-deploy:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            # Find a cache corresponding to this specific package-lock.json
-            - v1-npm-deps-{{ checksum "package-lock.json" }}
-            # Fallback cache to be used
-            - v1-npm-deps-
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Test
-          command: npm run test
-      - run:
-          name: Build
-          command: npm run build
-      - run:
-          name: Firebase Deploy
-          command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+      - node/with-cache:
+          steps:
+            - run:
+                name: Install Dependencies
+                command: npm install
+            - run:
+                name: Test
+                command: npm run test
+            - run:
+                name: Build
+                command: npm run build
+            - run:
+                name: Firebase Deploy
+                command: ./node_modules/.bin/firebase deploy --token "$FIREBASE_TOKEN"
+workflows:
+    build-and-deploy:
+      jobs:
+        - build-and-deploy
