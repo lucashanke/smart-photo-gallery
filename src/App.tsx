@@ -10,7 +10,7 @@ import Folder from './components/folders/Folder';
 const App: React.StatelessComponent = () => {
   return (
     <Router>
-      <div>
+      <div className="app">
         <nav>
           <ul>
             <li>

@@ -4,11 +4,12 @@ import { CommonPrefix } from 'aws-sdk/clients/s3';
 
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: 'us-east-1:f54880df-0bbe-4e61-9ea3-7378a523fc4c',
+  IdentityPoolId: 'us-east-1:ba31fc5b-17d8-46c9-acd0-e491baeb684d',
 });
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-const bucketName = 'pittystop-teste';
+const bucketName = 'pittystop-gallery-photos';
+const thumbnailBucketName = 'pittystop-gallery-thumbnails';
 
 const getChildName = (prefix: CommonPrefix, path: string) => {
   return prefix.Prefix!.replace(path, '').replace('/', '');
@@ -22,11 +23,12 @@ const getPathName = (path) => {
   return "";
 }
 
+export const getThumbnailUrl = (key: string) => 'https://' + thumbnailBucketName + '.s3.amazonaws.com/' + key;
 export const getImageUrl = (key: string) => 'https://' + bucketName + '.s3.amazonaws.com/' + key;
 
 export const getFolder = (path: string = ''): Promise<Folder> => {
   const params = {
-    Bucket: bucketName,
+    Bucket: thumbnailBucketName,
     Delimiter: '/',
     Prefix: path === '/' ? '' : path,
   };

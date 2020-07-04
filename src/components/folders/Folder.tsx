@@ -1,5 +1,5 @@
 import React from 'react';
-import { getFolder, getImageUrl } from '../../aws/s3';
+import { getFolder, getThumbnailUrl } from '../../aws/s3';
 import { Folder } from '../../models';
 import { useRouteMatch, Link } from 'react-router-dom';
 
@@ -20,11 +20,17 @@ const FolderComponent: React.FunctionComponent = () => {
         fetchFolders(path);
     }, [path]);
 
-    return loading ? <span>Loading...</span> : <>
+    return loading ? <span>Loading...</span> : <div className="folder">
         <h1>{folder?.name}</h1>
-        {folder?.children?.map(child => <Link to={`${url}/${child.name}`}>{child.name}</Link>)}
-        {folder?.content?.map(key => <img src={getImageUrl(key)} />)}
-    </>;
+
+        <ul className="subfolders">
+            {folder?.children?.map(child => <li><Link to={`${url}/${child.name}`} key={child.name}>{child.name}</Link></li>)}
+        </ul>
+
+        <ul className="contents">
+            {folder?.content?.map(key => <li><img src={getThumbnailUrl(key)} alt="" /></li>)}
+        </ul>
+    </div>;
 }
 
 export default FolderComponent;
