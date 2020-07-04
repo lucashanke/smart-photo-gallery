@@ -7,7 +7,10 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
   IdentityPoolId: 'us-east-1:ba31fc5b-17d8-46c9-acd0-e491baeb684d',
 });
 
-const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+const s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  region: 'sa-east-1',
+});
 const bucketName = 'pittystop-gallery-photos';
 const thumbnailBucketName = 'pittystop-gallery-thumbnails';
 
