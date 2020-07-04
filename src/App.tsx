@@ -6,6 +6,7 @@ import {
   Link,
 } from 'react-router-dom';
 import Folder from './components/folders/Folder';
+import Photo from './components/folders/Photo';
 
 const App: React.StatelessComponent = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.StatelessComponent = () => {
 
         <Switch>
           <Route path="/folder" exact component={Folder} />
+          <Route path="/photo/*" component={Photo} />
           <Route path="/folder/*" component={Folder} />
         </Switch>
       </div>

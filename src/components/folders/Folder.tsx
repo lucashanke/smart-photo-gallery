@@ -28,7 +28,11 @@ const FolderComponent: React.FunctionComponent = () => {
         </ul>
 
         <ul className="contents">
-            {folder?.content?.map(key => <li><img src={getThumbnailUrl(key)} alt="" /></li>)}
+            {folder?.content?.map(key => <li>
+                <Link to={`/photo/${key}`} key={key}>
+                    <img src={getThumbnailUrl(key)} alt="" />
+                </Link>
+            </li>)}
         </ul>
     </div>;
 }
