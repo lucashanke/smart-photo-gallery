@@ -2,6 +2,7 @@ import React from 'react';
 import { getFolder, getThumbnailUrl } from '../../aws/s3';
 import { Folder } from '../../models';
 import { useRouteMatch, Link } from 'react-router-dom';
+import Breadcrumbs from './Breadcrumbs';
 
 const FolderComponent: React.FunctionComponent = () => {
     const { url } = useRouteMatch();
@@ -21,15 +22,19 @@ const FolderComponent: React.FunctionComponent = () => {
     }, [path]);
 
     return loading ? <span>Loading...</span> : <div className="folder">
-        <h1>{folder?.name}</h1>
+        <Breadcrumbs pathComponents={folder?.pathComponents} />
+
+        <h1 data-testid="folder-name">{folder?.name}</h1>
 
         <ul className="subfolders">
-            {folder?.children?.map(child => <li><Link to={`${url}/${child.name}`} key={child.name}>{child.name}</Link></li>)}
+            {folder?.children?.map(child => <li key={child.name}>
+                <Link to={`${url}/${child.name}`}>{child.name}</Link>
+            </li>)}
         </ul>
 
         <ul className="contents">
-            {folder?.content?.map(key => <li>
-                <Link to={`/photo/${key}`} key={key}>
+            {folder?.content?.map(key => <li key={key}>
+                <Link to={`/photo/${key}`}>
                     <img src={getThumbnailUrl(key)} alt="" />
                 </Link>
             </li>)}

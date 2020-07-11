@@ -5,8 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-	background: #212121;
-	color: #111;
+	background: #212121;// url('/main.jpg') repeat-x top;
+	color: #666;
 }
 
 code {
@@ -30,13 +30,28 @@ ul {
 }
 
 .app {
-  max-width: 80vw;
-  margin: 20px auto;
+  max-width: 60vw;
+  margin: 20px auto 20px;//400px auto 20px;
+  background: rgba(50,50,50,0.5);
+  padding: 20px;
 }
 
 .folder {
   h1 {
     color: #f0f0f0;
+  }
+
+  ul.breadcrumb {
+    list-style: none;
+  }
+
+  ul.breadcrumb li {
+    display: inline;
+  }
+
+  ul.breadcrumb li+li:before {
+    padding: 1em;
+    content: "/\00a0";
   }
 
   .contents {
@@ -51,6 +66,13 @@ ul {
 
 .subfolders {
   li {
-    margin: 20px 0;
+    margin: 10px 0;
+
+    a {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+      font-weight: bold;
+    }
   }
 }

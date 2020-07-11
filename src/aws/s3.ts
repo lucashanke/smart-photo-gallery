@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import { Folder } from '../models';
+import { Folder, PathComponent } from '../models';
 import { CommonPrefix } from 'aws-sdk/clients/s3';
 
 AWS.config.region = 'us-east-1';
@@ -26,8 +26,31 @@ const getPathName = (path) => {
   return "";
 }
 
+const getPathComponents = (path) => {
+  const pathComponents = path.split('/').filter(component => component != '');
+  let currentPath = '';
+  return pathComponents.map(element => {
+    currentPath = `${currentPath}/${element}`;
+    return {
+      name: element,
+      path: currentPath
+    };
+  });
+}
+
 export const getThumbnailUrl = (key: string) => 'https://' + thumbnailBucketName + '.s3.amazonaws.com/' + key;
 export const getImageUrl = (key: string) => 'https://' + bucketName + '.s3.amazonaws.com/' + key;
+
+export const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output) => ({
+  path,
+  name: getPathName(path),
+  pathComponents: getPathComponents(path),
+  children: data.CommonPrefixes?.map(element => ({
+    name: getChildName(element, path),
+    path: element.Prefix!,
+  })),
+  content: data.Contents?.map(content => content.Key!).filter(key => key.endsWith('jpg')),
+});
 
 export const getFolder = (path: string = ''): Promise<Folder> => {
   const params = {
@@ -43,15 +66,7 @@ export const getFolder = (path: string = ''): Promise<Folder> => {
         return;
       }
 
-      resolve({
-        path,
-        name: getPathName(path),
-        children: data.CommonPrefixes?.map(element => ({
-          name: getChildName(element, path),
-          path: element.Prefix!,
-        })),
-        content: data.Contents?.map(content => content.Key!).filter(key => key.endsWith('jpg')),
-      });
+      resolve(listObjectsResponseToFolder(path, data));
     });
   });
 }
