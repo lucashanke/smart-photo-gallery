@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import { Folder, PathComponent } from '../models';
+import { Folder } from '../models';
 import { CommonPrefix } from 'aws-sdk/clients/s3';
 
 AWS.config.region = 'us-east-1';
@@ -27,7 +27,7 @@ const getPathName = (path) => {
 }
 
 const getPathComponents = (path) => {
-  const pathComponents = path.split('/').filter(component => component != '');
+  const pathComponents = path.split('/').filter(component => component !== '');
   let currentPath = '';
   return pathComponents.map(element => {
     currentPath = `${currentPath}/${element}`;
@@ -49,7 +49,9 @@ export const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.Lis
     name: getChildName(element, path),
     path: element.Prefix!,
   })),
-  content: data.Contents?.map(content => content.Key!).filter(key => key.endsWith('jpg')),
+  content: data.Contents?.map(content => content.Key!).filter(key => {
+    return key.toLowerCase().endsWith('jpg') || key.toLowerCase().endsWith('jpeg') || key.toLowerCase().endsWith('png')
+  }),
 });
 
 export const getFolder = (path: string = ''): Promise<Folder> => {

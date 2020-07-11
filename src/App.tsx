@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from 'react-router-dom';
 import Folder from './components/folders/Folder';
 import Photo from './components/folders/Photo';
