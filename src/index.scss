@@ -15,7 +15,7 @@ code {
 }
 
 a {
-	color : #f0f0f0;
+	color : #dddddd;
 	text-decoration: none;
 }
 
@@ -50,7 +50,7 @@ ul {
   }
 
   ul.breadcrumb li+li:before {
-    padding: 1em;
+    padding: 0.5em;
     content: "/\00a0";
   }
 
@@ -73,6 +73,12 @@ ul {
       width: 100%;
       padding: 10px 0;
       font-weight: bold;
+    }
+
+    .cover {
+      width: 50px;
+      vertical-align: middle;
+      margin-right: 1em;
     }
   }
 }
