@@ -9,7 +9,7 @@ import Breadcrumbs from './Breadcrumbs';
 const FOLDER_ICON = '/folder.png';
 
 const FolderComponent: React.FunctionComponent = () => {
-    const { hash, pathname } = useLocation();
+    const { pathname } = useLocation();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [folder, setFolder] = React.useState<Folder | undefined>(undefined);
     const [photos, setPhotos] = React.useState<any[]>([]);
