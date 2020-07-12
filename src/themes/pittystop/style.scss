@@ -3,5 +3,16 @@ body {
 }
 
 .app {
-  margin: 400px auto 20px;
+  margin-top: 400px;
+  background: rgba(50,50,50,0.5);
+}
+
+@media screen and (max-width: 1000px) {
+  body {
+    background-size: contain;
+  }
+
+  .app {
+    margin-top: 30vw;
+  }
 }

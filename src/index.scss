@@ -30,10 +30,19 @@ ul {
 }
 
 .app {
-  max-width: 80vw;
-  margin: 20px auto 20px;
-  background: rgba(50,50,50,0.5);
-  padding: 20px;
+  width: 80vw;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 1px 20px;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 1000px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 }
 
 .folder {
@@ -60,9 +69,9 @@ ul {
     margin: 10px 0;
 
     a {
-      display: block;
-      width: 100%;
-      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      padding: 5px 0;
       font-weight: bold;
     }
 
@@ -71,6 +80,12 @@ ul {
       vertical-align: middle;
       margin-right: 1em;
     }
+  }
+}
+
+.contents {
+  @media screen and (max-width: 768px) {
+    margin: 0 -20px;
   }
 }
 
