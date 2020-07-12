@@ -7,6 +7,8 @@ import {
 import Folder from './components/folders/Folder';
 import Photo from './components/folders/Photo';
 
+import './themes/pittystop/theme';
+
 const App: React.StatelessComponent = () => {
   return (
     <Router>
