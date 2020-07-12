@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, act, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import FolderComponent from './Folder';
 import { getFolder } from '../../aws/s3'
 import { MemoryRouter } from 'react-router-dom';
@@ -12,7 +12,7 @@ const subfolder = {
 };
 const folderWithSubfolder = {
   path: '/',
-  name: '',
+  name: 'Home',
   children: [
     subfolder
   ],
@@ -44,16 +44,14 @@ test.each([
   await waitForElementToBeRemoved(() => getByText(/loading/i));
 });
 
-// test('loads the subfolder when clicking', async () => {
-//   getFolder.mockResolvedValueOnce(folderWithSubfolder);
-//   getFolder.mockResolvedValueOnce(subfolder);
+test('loads the subfolder when clicking', async () => {
+  getFolder.mockResolvedValueOnce(folderWithSubfolder);
+  getFolder.mockResolvedValueOnce(subfolder);
 
-//   const { findByText, findByTestId } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
-//   const subfolderElement = await findByText(/Subfolder 1/i);
-//   subfolderElement.click();
+  const { getByText, findByText, getByTestId } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
+  const subfolderElement = await findByText(/Subfolder 1/i);
+  subfolderElement.click();
 
-//   const folderTitleElement = await findByTestId('folder-name');
-
-//   await waitFor(() => )
-//   expect(folderTitleElement).toHaveTextContent('Subfolder 1');
-// });
+  await waitForElementToBeRemoved(() => getByText('Home'));
+  expect(getByTestId('folder-name')).toHaveTextContent('Subfolder 1');
+});
