@@ -35,7 +35,7 @@ const FolderComponent: React.FunctionComponent = () => {
     return loading ? <span>Loading...</span> : <div className="folder">
         <Breadcrumbs pathComponents={folder?.parents} />
 
-        <h1 data-testid="folder-name">{folder?.name || 'Categorias'}</h1>
+        <h1>{folder?.name || 'Categorias'}</h1>
 
         <ul className="subfolders">
             {folder?.children?.map((child, index) => <li key={child.name}>

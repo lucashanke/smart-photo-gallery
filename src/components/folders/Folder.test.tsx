@@ -1,57 +1,52 @@
 import React from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, waitForElementToBeRemoved, act } from '@testing-library/react';
 import FolderComponent from './Folder';
-import { getFolder } from '../../aws/s3'
 import { MemoryRouter } from 'react-router-dom';
 
-jest.mock('../../aws/s3');
+jest.mock('../../aws/config');
 
-const subfolder = {
-  path: 'Subfolder 1/',
-  name: 'Subfolder 1'
-};
-const folderWithSubfolder = {
-  path: '/',
-  name: 'Home',
-  children: [
-    subfolder
-  ],
-};
+describe('<Folder>', () => {
+  it('displays a loading message and eventually shows all the subfolders', async () => {
+    const { getByText, getByRole } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
+    const loading = getByText(/loading/i);
+    expect(loading).toBeInTheDocument();
 
-beforeEach(() => {
-  getFolder.mockReset();
-});
+    await waitForElementToBeRemoved(() => getByText(/loading/i));
 
-test('shows the subfolders', async () => {
-  getFolder.mockResolvedValue(folderWithSubfolder);
+    expect(getByRole('heading')).toHaveTextContent('Categorias');
+    expect(getByText(/Category 1/i)).toBeInTheDocument();
+    expect(getByText(/Category 2/i)).toBeInTheDocument();
+    expect(getByText(/Category 3/i)).toBeInTheDocument();
+  });
 
-  const { findByText } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
-  const subfolderElement = await findByText(/Subfolder 1/i);
-  expect(subfolderElement).toBeInTheDocument();
-});
+  it('loads the subfolder when clicking', async () => {
+    const { getByRole, findByText, getByText } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
 
-test.each([
-  ['/', '/'],
-  ['/category', 'category/'],
-  ['/category/', 'category/'],
-  ['/category/bla', 'category/bla/'],
-])('loads the folder with the correct prefix when page url is %s', async (pageUrl, expectedFolderPath) => {
-  getFolder.mockResolvedValueOnce(folderWithSubfolder);
-  
-  const { getByText } = render(<MemoryRouter initialEntries={[pageUrl]}><FolderComponent /></MemoryRouter>);
-  
-  expect(getFolder).toHaveBeenCalledWith(expectedFolderPath);
-  await waitForElementToBeRemoved(() => getByText(/loading/i));
-});
+    await act(async () => {
+      const categoryFolder = await findByText(/Category 1/i);
+      categoryFolder.click();
+    });
 
-test('loads the subfolder when clicking', async () => {
-  getFolder.mockResolvedValueOnce(folderWithSubfolder);
-  getFolder.mockResolvedValueOnce(subfolder);
+    expect(getByRole('heading')).toHaveTextContent('Category 1');
+    expect(getByText(/SubCategory 11/i)).toBeInTheDocument();
+    expect(getByText(/SubCategory 12/i)).toBeInTheDocument();
+  });
 
-  const { getByText, findByText, getByTestId } = render(<MemoryRouter><FolderComponent /></MemoryRouter>);
-  const subfolderElement = await findByText(/Subfolder 1/i);
-  subfolderElement.click();
+  it.each([
+    ['/', 'Categorias', ['Category 1', 'Category 2', 'Category 3']],
+    ['/Category 1', 'Category 1', ['SubCategory 11', 'SubCategory 12']],
+    ['/Category 1/', 'Category 1', ['SubCategory 11', 'SubCategory 12']],
+    ['/Category 1/SubCategory 11', 'SubCategory 11', []],
+  ])('loads the folder with the correct prefix when page url is %s', async (pageUrl, expectedHeader, expectedSubFolders) => {
+    const { getByText, getByRole } = render(<MemoryRouter initialEntries={[pageUrl]}><FolderComponent /></MemoryRouter>);
 
-  await waitForElementToBeRemoved(() => getByText('Home'));
-  expect(getByTestId('folder-name')).toHaveTextContent('Subfolder 1');
+    await waitForElementToBeRemoved(() => getByText(/loading/i));
+
+    expect(getByRole('heading')).toHaveTextContent(expectedHeader);
+    expectedSubFolders.forEach((expectedSubFolder) => {
+      const subfolder = getByText(expectedSubFolder);
+      expect(subfolder).toBeInTheDocument();
+      expect(subfolder).toHaveAttribute('href');
+    });
+  });
 });
