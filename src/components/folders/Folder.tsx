@@ -1,17 +1,17 @@
 import React from 'react';
+import path from 'path-browserify';
 import { getFolder, getThumbnailUrl } from '../../aws/s3';
 import { Folder } from '../../models';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
 
 const FOLDER_ICON = '/folder.png';
 
 const FolderComponent: React.FunctionComponent = () => {
-    const { url } = useRouteMatch();
+    const { pathname } = useLocation();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [folder, setFolder] = React.useState<Folder | undefined>(undefined);
-
-    const path = `${url.replace(/\/folder(\/?)/, '')}/`;
+    const currentPath = pathname.replace(/\/(.+)\/$|\/(.+)$/, '$1$2/');
 
     const fetchFolders = async (path) => {
         setLoading(true);
@@ -20,8 +20,8 @@ const FolderComponent: React.FunctionComponent = () => {
     };
 
     React.useEffect(() => {
-        fetchFolders(path);
-    }, [path]);
+        fetchFolders(currentPath);
+    }, [currentPath]);
 
     return loading ? <span>Loading...</span> : <div className="folder">
         <Breadcrumbs pathComponents={folder?.pathComponents} />
@@ -30,11 +30,8 @@ const FolderComponent: React.FunctionComponent = () => {
 
         <ul className="subfolders">
             {folder?.children?.map((child, index) => <li key={child.name}>
-                <Link to={`${url}/${child.name}`}>
-                    {/* <object data={getThumbnailUrl(`${path}${child.name}/cover.jpg`)} type="image/jpeg" className="cover">
-                    </object> */}
-                    <img src={getThumbnailUrl(`${path}${child.name}/cover.jpg`)} onError={(e) => (e.target as HTMLImageElement).src = FOLDER_ICON } alt={child.name} className="cover" id={`cover-${index}`} />
-
+                <Link to={path.join(pathname, child.name)}>
+                    <img src={getThumbnailUrl(`${currentPath}${child.name}/cover.jpg`)} onError={(e) => (e.target as HTMLImageElement).src = FOLDER_ICON } alt={child.name} className="cover" id={`cover-${index}`} />
                     {child.name}
                 </Link>
             </li>)}

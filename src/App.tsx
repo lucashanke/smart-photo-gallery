@@ -12,9 +12,8 @@ const App: React.StatelessComponent = () => {
     <Router>
       <div className="app">
         <Switch>
-          <Route path="/folder" exact component={Folder} />
           <Route path="/photo/*" component={Photo} />
-          <Route path="/folder/*" component={Folder} />
+          <Route path="/*" component={Folder} />
         </Switch>
       </div>
     </Router>
