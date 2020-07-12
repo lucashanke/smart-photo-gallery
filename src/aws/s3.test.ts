@@ -10,97 +10,97 @@ const expectedFolders = [
     parents: [],
     content: [],
     children: [
-      { name: 'category1', path: 'category1/' },
-      { name: 'category2', path: 'category2/' },
-      { name: 'category3', path: 'category3/' },
+      { name: 'Category 1', path: 'Category 1/' },
+      { name: 'Category 2', path: 'Category 2/' },
+      { name: 'Category 3', path: 'Category 3/' },
     ],
   }],
-  ['category1/', {
-    path: 'category1/',
-    name: 'category1',
+  ['Category 1/', {
+    path: 'Category 1/',
+    name: 'Category 1',
     parents: [{
-      path: '/category1',
-      name: 'category1',
+      path: '/Category 1',
+      name: 'Category 1',
     }],
     content: [],
     children: [
-      { name: 'subCategory11', path: 'category1/subCategory11/' },
-      { name: 'subCategory12', path: 'category1/subCategory12/' },
+      { name: 'SubCategory 11', path: 'Category 1/SubCategory 11/' },
+      { name: 'SubCategory 12', path: 'Category 1/SubCategory 12/' },
     ],
   }],
-  ['category1/subCategory11/', {
-    path: 'category1/subCategory11/',
-    name: 'subCategory11',
+  ['Category 1/SubCategory 11/', {
+    path: 'Category 1/SubCategory 11/',
+    name: 'SubCategory 11',
     parents: [{
-      path: '/category1',
-      name: 'category1',
+      path: '/Category 1',
+      name: 'Category 1',
     }, {
-      path: '/category1/subCategory11',
-      name: 'subCategory11',
+      path: '/Category 1/SubCategory 11',
+      name: 'SubCategory 11',
     }],
-    content: ['category1/subCategory11/photo111.jpg'],
+    content: ['Category 1/SubCategory 11/photo111.jpg'],
     children: [],
   }],
-  ['category1/subCategory12/', {
-    path: 'category1/subCategory12/',
-    name: 'subCategory12',
+  ['Category 1/SubCategory 12/', {
+    path: 'Category 1/SubCategory 12/',
+    name: 'SubCategory 12',
     parents: [{
-      path: '/category1',
-      name: 'category1',
+      path: '/Category 1',
+      name: 'Category 1',
     }, {
-      path: '/category1/subCategory12',
-      name: 'subCategory12',
+      path: '/Category 1/SubCategory 12',
+      name: 'SubCategory 12',
     }],
-    content: ['category1/subCategory12/photo121.jpg', 'category1/subCategory12/photo122.jpg'],
+    content: ['Category 1/SubCategory 12/photo121.jpg', 'Category 1/SubCategory 12/photo122.jpg'],
     children: [],
   }],
-  ['category2/', {
-    path: 'category2/',
-    name: 'category2',
+  ['Category 2/', {
+    path: 'Category 2/',
+    name: 'Category 2',
     parents: [{
-      path: '/category2',
-      name: 'category2',
+      path: '/Category 2',
+      name: 'Category 2',
     }],
     content: [],
     children: [
-      { name: 'subCategory21', path: 'category2/subCategory21/' },
-      { name: 'subCategory22', path: 'category2/subCategory22/' },
+      { name: 'SubCategory 21', path: 'Category 2/SubCategory 21/' },
+      { name: 'SubCategory 22', path: 'Category 2/SubCategory 22/' },
     ],
   }],
-  ['category2/subCategory21/', {
-    path: 'category2/subCategory21/',
-    name: 'subCategory21',
+  ['Category 2/SubCategory 21/', {
+    path: 'Category 2/SubCategory 21/',
+    name: 'SubCategory 21',
     parents: [{
-      path: '/category2',
-      name: 'category2',
+      path: '/Category 2',
+      name: 'Category 2',
     }, {
-      path: '/category2/subCategory21',
-      name: 'subCategory21',
+      path: '/Category 2/SubCategory 21',
+      name: 'SubCategory 21',
     }],
     content: [],
     children: [],
   }],
-  ['category2/subCategory22/', {
-    path: 'category2/subCategory22/',
-    name: 'subCategory22',
+  ['Category 2/SubCategory 22/', {
+    path: 'Category 2/SubCategory 22/',
+    name: 'SubCategory 22',
     parents: [{
-      path: '/category2',
-      name: 'category2',
+      path: '/Category 2',
+      name: 'Category 2',
     }, {
-      path: '/category2/subCategory22',
-      name: 'subCategory22',
+      path: '/Category 2/SubCategory 22',
+      name: 'SubCategory 22',
     }],
-    content: ['category2/subCategory22/photo221.jpg', 'category2/subCategory22/photo222.jpg', 'category2/subCategory22/photo223.jpg'],
+    content: ['Category 2/SubCategory 22/photo221.jpg', 'Category 2/SubCategory 22/photo222.jpg', 'Category 2/SubCategory 22/photo223.jpg'],
     children: [],
   }],
-  ['category3/', {
-    path: 'category3/',
-    name: 'category3',
+  ['Category 3/', {
+    path: 'Category 3/',
+    name: 'Category 3',
     parents: [{
-      path: '/category3',
-      name: 'category3',
+      path: '/Category 3',
+      name: 'Category 3',
     }],
-    content: ['category3/photo31.jpg', 'category3/photo32.jpg', 'category3/photo33.jpg'],
+    content: ['Category 3/photo31.jpg', 'Category 3/photo32.jpg', 'Category 3/photo33.jpg'],
     children: [],
   }],
 ];
