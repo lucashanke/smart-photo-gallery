@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, waitForElementToBeRemoved, act } from '@testing-library/react';
 import FolderComponent from './Folder';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 jest.mock('../../aws/config');
 
@@ -48,5 +49,25 @@ describe('<Folder>', () => {
       expect(subfolder).toBeInTheDocument();
       expect(subfolder).toHaveAttribute('href');
     });
+  });
+
+  it('loads the photo gallery when folder has contents', async () => {
+    const { getByText, getAllByRole } = render(<MemoryRouter initialEntries={['/Category 1/SubCategory 11']}><FolderComponent /></MemoryRouter>);
+
+    await waitForElementToBeRemoved(() => getByText(/Loading/i));
+
+    expect(getAllByRole('img')[0]).toHaveAttribute('src', expect.stringContaining('Category 1/SubCategory 11/photo111.jpg'));
+  });
+
+  it('sets the hash of the photo on url when navigating the photo gallery', async () => {
+    const history = createMemoryHistory();
+    history.push('/Category 2/SubCategory 22');
+    const { getByText, getAllByRole } = render(<Router history={history}><FolderComponent /></Router>);
+
+    await waitForElementToBeRemoved(() => getByText(/Loading/i));
+
+    getAllByRole('img')[4].click();
+
+    expect(history.location.hash).toEqual('#photo222.jpg');
   });
 });
