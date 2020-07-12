@@ -10,7 +10,7 @@ const Breadcrumbs: React.FunctionComponent<{
             <Link to="/">Home</Link>
         </li>}
         {props.pathComponents?.map((pathComponent, index, list) => <li key={pathComponent.path}>
-            {index !== (list.length - 1) ? <Link to={`/folder${pathComponent.path}`}>{pathComponent.name}</Link> : pathComponent.name}
+            {index !== (list.length - 1) ? <Link to={`${pathComponent.path}`}>{pathComponent.name}</Link> : pathComponent.name}
         </li>)}
     </ul>;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import path from 'path-browserify';
-import { getFolder, getThumbnailUrl } from '../../aws/s3';
+import ImageGallery from 'react-image-gallery';
+import { getFolder, getThumbnailUrl, getImageUrl } from '../../aws/s3';
 import { Folder } from '../../models';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
@@ -8,14 +9,22 @@ import Breadcrumbs from './Breadcrumbs';
 const FOLDER_ICON = '/folder.png';
 
 const FolderComponent: React.FunctionComponent = () => {
-    const { pathname } = useLocation();
+    const { hash, pathname } = useLocation();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [folder, setFolder] = React.useState<Folder | undefined>(undefined);
+    const [photos, setPhotos] = React.useState<any[]>([]);
     const currentPath = pathname.replace(/\/(.+)\/$|\/(.+)$/, '$1$2/');
 
     const fetchFolders = async (path) => {
         setLoading(true);
-        setFolder(await getFolder(path));
+        const folderReponse = await getFolder(path);
+        setFolder(folderReponse);
+        if (folderReponse?.content) {
+            setPhotos(folderReponse.content.filter(key => !key.endsWith('cover.jpg')).map(key => ({
+                original: getImageUrl(key),
+                thumbnail: getThumbnailUrl(key),
+            })));
+        }
         setLoading(false);
     };
 
@@ -37,13 +46,9 @@ const FolderComponent: React.FunctionComponent = () => {
             </li>)}
         </ul>
 
-        <ul className="contents">
-            {folder?.content?.map(key => <li key={key}>
-                <Link to={`/photo/${key}`}>
-                    <img src={getThumbnailUrl(key)} alt="" />
-                </Link>
-            </li>)}
-        </ul>
+        <div className="contents">
+            {photos.length > 0 && <ImageGallery items={photos} showIndex slideDuration={0} lazyLoad />}
+        </div>
     </div>;
 }
 

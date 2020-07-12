@@ -53,15 +53,6 @@ ul {
     padding: 0.5em;
     content: "/\00a0";
   }
-
-  .contents {
-    display: flex;
-    flex-wrap: wrap;
-
-    li {
-      margin: 10px;
-    }
-  }
 }
 
 .subfolders {
@@ -82,3 +73,5 @@ ul {
     }
   }
 }
+
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
