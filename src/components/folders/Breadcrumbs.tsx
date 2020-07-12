@@ -1,9 +1,9 @@
 import React from 'react';
-import { PathComponent } from '../../models';
+import { Folder } from '../../models';
 import { Link } from 'react-router-dom';
 
 const Breadcrumbs: React.FunctionComponent<{
-    pathComponents?: PathComponent[];
+    pathComponents?: Folder[];
 }> = (props) => {
     return <ul className="breadcrumb" data-testid="breadcrumbs">
         {props.pathComponents && props.pathComponents.length > 0 && <li key="home">

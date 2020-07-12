@@ -1,16 +1,7 @@
-import AWS from 'aws-sdk';
 import { Folder } from '../models';
 import { CommonPrefix } from 'aws-sdk/clients/s3';
+import { s3 } from './config';
 
-AWS.config.region = 'us-east-1';
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-  IdentityPoolId: 'us-east-1:ba31fc5b-17d8-46c9-acd0-e491baeb684d',
-});
-
-const s3 = new AWS.S3({
-  apiVersion: '2006-03-01',
-  region: 'sa-east-1',
-});
 const bucketName = 'pittystop-gallery-photos';
 const thumbnailBucketName = 'pittystop-gallery-thumbnails';
 
@@ -41,10 +32,10 @@ const getPathComponents = (path) => {
 export const getThumbnailUrl = (key: string) => 'https://' + thumbnailBucketName + '.s3.amazonaws.com/' + key;
 export const getImageUrl = (key: string) => 'https://' + bucketName + '.s3.amazonaws.com/' + key;
 
-export const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output) => ({
+const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output): Folder => ({
   path,
   name: getPathName(path),
-  pathComponents: getPathComponents(path),
+  parents: getPathComponents(path),
   children: data.CommonPrefixes?.map(element => ({
     name: getChildName(element, path),
     path: element.Prefix!,
@@ -71,4 +62,4 @@ export const getFolder = (path: string = ''): Promise<Folder> => {
       resolve(listObjectsResponseToFolder(path, data));
     });
   });
-}
+};

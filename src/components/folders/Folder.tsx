@@ -24,7 +24,7 @@ const FolderComponent: React.FunctionComponent = () => {
     }, [currentPath]);
 
     return loading ? <span>Loading...</span> : <div className="folder">
-        <Breadcrumbs pathComponents={folder?.pathComponents} />
+        <Breadcrumbs pathComponents={folder?.parents} />
 
         <h1 data-testid="folder-name">{folder?.name || 'Categorias'}</h1>
 

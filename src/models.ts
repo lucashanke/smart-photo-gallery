@@ -1,12 +1,7 @@
 export interface Folder {
     path: string;
     name: string;
-    pathComponents?: PathComponent[];
+    parents?: Folder[];
     content?: string[];
     children?: Folder[],
-}
-
-export interface PathComponent {
-    path: string;
-    name: string;
 }
