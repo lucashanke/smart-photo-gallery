@@ -1,18 +1,28 @@
 import React from 'react';
-import { Folder } from '../../models';
 import { Link } from 'react-router-dom';
 
 const Breadcrumbs: React.FunctionComponent<{
-    pathComponents?: Folder[];
+    path: string;
 }> = (props) => {
+    const crumbs = props.path.split('/').filter(name => name).map((name, index, names) => {
+        return {
+            name,
+            path: names.slice(0, index+1).join('/'),
+        }
+    });
+
     return <ul className="breadcrumb" data-testid="breadcrumbs">
-        {props.pathComponents && props.pathComponents.length > 0 && <li key="home">
+        {crumbs.length > 0 && <li key="home">
             <Link to="/">Home</Link>
         </li>}
-        {props.pathComponents?.map((pathComponent, index, list) => <li key={pathComponent.path}>
-            {index !== (list.length - 1) ? <Link to={`${pathComponent.path}`}>{pathComponent.name}</Link> : pathComponent.name}
+        {crumbs?.map((option, index) => <li key={option.path}>
+            {index !== (crumbs.length - 1) ? <Link to={`/${option.path}`}>{option.name}</Link> : option.name}
         </li>)}
     </ul>;
+}
+
+Breadcrumbs.defaultProps = {
+    path: '',
 }
 
 export default Breadcrumbs;

@@ -1,60 +1,38 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Breadcrumbs from './Breadcrumbs';
 import { MemoryRouter } from 'react-router-dom';
 
-test('displays the breadcrumbs based on folder path', async () => {
-  const pathComponents = [
-    {
-      path: '/Photoshoots',
-      name: 'Photoshoots',
-    },
-    {
-      path: '/Photoshoots/2020',
-      name: '2020',
-    },
-    {
-      path: '/Photoshoots/2020/Whatever album',
-      name: 'Whatever album',
-    }
-  ];
+describe('<Breadcrumbs />', () => {
+  it('shows a home breadcrumb when path is not empty', async () => {
+    render(<MemoryRouter><Breadcrumbs path="/Photoshoots/2020/Whatever album" /></MemoryRouter>);
 
-  const { findByTestId } = render(<MemoryRouter><Breadcrumbs pathComponents={pathComponents} /></MemoryRouter>);
+    const homeLink = await screen.findByRole('link', { name: 'Home' });
+    expect(homeLink).toHaveTextContent('Home');
+    expect(homeLink).toHaveAttribute('href', '/');
+  });
 
-  const breadcrumbs = await findByTestId('breadcrumbs');
+  it('does not show a home breadcrumb when path is empty', async () => {
+    render(<MemoryRouter><Breadcrumbs path={""} /></MemoryRouter>);
 
-  expect(breadcrumbs).toHaveTextContent('Photoshoots');
-  expect(breadcrumbs).toHaveTextContent('2020');
-  expect(breadcrumbs).toHaveTextContent('Whatever album');
-});
+    const breadcrumbs = await screen.findByTestId('breadcrumbs');
 
-test('shows a home breadcrumb when there are path components', async () => {
-  const pathComponents = [
-    {
-      path: '/Photoshoots',
-      name: 'Photoshoots',
-    },
-    {
-      path: '/Photoshoots/2020',
-      name: '2020',
-    },
-    {
-      path: '/Photoshoots/2020/Whatever album',
-      name: 'Whatever album',
-    }
-  ];
+    expect(breadcrumbs).not.toHaveTextContent('Home');
+  });
 
-  const { findByTestId } = render(<MemoryRouter><Breadcrumbs pathComponents={pathComponents} /></MemoryRouter>);
+  it('displays the breadcrumbs based on folder path', async () => {
+    render(<MemoryRouter><Breadcrumbs path="/Photoshoots/2020/Whatever album" /></MemoryRouter>);
 
-  const breadcrumbs = await findByTestId('breadcrumbs');
+    const firstCrumb = screen.queryByRole('link', { name: 'Photoshoots' });
+    expect(firstCrumb).toHaveTextContent('Photoshoots');
+    expect(firstCrumb).toHaveAttribute('href', '/Photoshoots');
 
-  expect(breadcrumbs).toHaveTextContent('Home');
-});
+    const secondCrumb = screen.queryByRole('link', { name: '2020' })
+    expect(secondCrumb).toHaveTextContent('2020');
+    expect(secondCrumb).toHaveAttribute('href', '/Photoshoots/2020');
 
-test('does not show a home breadcrumb when path components is empty', async () => {
-  const { findByTestId } = render(<MemoryRouter><Breadcrumbs pathComponents={[]} /></MemoryRouter>);
-
-  const breadcrumbs = await findByTestId('breadcrumbs');
-
-  expect(breadcrumbs).not.toHaveTextContent('Home');
+    expect(screen.queryByRole('link', { name: 'Whatever album' })).toBeNull();
+    const thirdAndDisabledCrumb = await screen.findByText('Whatever album', { selector: 'li' });
+    expect(thirdAndDisabledCrumb).toHaveTextContent('Whatever album');
+  });
 });

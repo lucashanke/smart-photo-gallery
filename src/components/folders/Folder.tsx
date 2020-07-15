@@ -42,7 +42,7 @@ const FolderComponent: React.FunctionComponent = () => {
     }, [currentPath]);
 
     return loading ? <span>Loading...</span> : <div className="folder">
-        <Breadcrumbs pathComponents={folder?.parents} />
+        <Breadcrumbs path={folder?.path || ''} />
 
         <h1>{folder?.name || 'Categorias'}</h1>
 
