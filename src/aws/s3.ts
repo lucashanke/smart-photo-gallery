@@ -17,25 +17,12 @@ const getPathName = (path) => {
   return "";
 }
 
-const getPathComponents = (path) => {
-  const pathComponents = path.split('/').filter(component => component !== '');
-  let currentPath = '';
-  return pathComponents.map(element => {
-    currentPath = `${currentPath}/${element}`;
-    return {
-      name: element,
-      path: currentPath
-    };
-  });
-}
-
 export const getThumbnailUrl = (key: string) => 'https://' + thumbnailBucketName + '.s3.amazonaws.com/' + key;
 export const getImageUrl = (key: string) => 'https://' + bucketName + '.s3.amazonaws.com/' + key;
 
 const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output): Folder => ({
   path,
   name: getPathName(path),
-  parents: getPathComponents(path),
   children: data.CommonPrefixes?.map(element => ({
     name: getChildName(element, path),
     path: element.Prefix!,
