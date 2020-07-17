@@ -32,7 +32,7 @@ const expectedFolders = [
   ['Category 1/SubCategory 12/', {
     path: 'Category 1/SubCategory 12/',
     name: 'SubCategory 12',
-    content: ['Category 1/SubCategory 12/photo121.jpg', 'Category 1/SubCategory 12/photo122.jpg'],
+    content: ['Category 1/SubCategory 12/photo121.jpg', 'Category 1/SubCategory 12/photo122.jpg', 'Category 1/SubCategory 12/cover.jpg'],
     children: [],
   }],
   ['Category 2/', {
@@ -59,7 +59,7 @@ const expectedFolders = [
   ['Category 3/', {
     path: 'Category 3/',
     name: 'Category 3',
-    content: ['Category 3/photo31.jpg', 'Category 3/photo32.jpg', 'Category 3/photo33.jpg'],
+    content: ['Category 3/photo31.jpg', 'Category 3/photo32.jpg', 'Category 3/photo33.jpg', 'Category 3/credits.txt'],
     children: [],
   }],
 ];

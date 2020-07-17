@@ -1,9 +1,6 @@
-import { Folder } from '../models';
+import { S3Folder } from '../models';
 import { CommonPrefix } from 'aws-sdk/clients/s3';
-import { s3 } from './config';
-
-const bucketName = 'pittystop-gallery-photos';
-const thumbnailBucketName = 'pittystop-gallery-thumbnails';
+import { s3, thumbnailBucketName, bucketName } from './config';
 
 const getChildName = (prefix: CommonPrefix, path: string) => {
   return prefix.Prefix!.replace(path, '').replace('/', '');
@@ -20,19 +17,17 @@ const getPathName = (path) => {
 export const getThumbnailUrl = (key: string) => 'https://' + thumbnailBucketName + '.s3.amazonaws.com/' + key;
 export const getImageUrl = (key: string) => 'https://' + bucketName + '.s3.amazonaws.com/' + key;
 
-const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output): Folder => ({
+const listObjectsResponseToFolder = (path: string, data: AWS.S3.Types.ListObjectsV2Output): S3Folder => ({
   path,
   name: getPathName(path),
   children: data.CommonPrefixes?.map(element => ({
     name: getChildName(element, path),
     path: element.Prefix!,
   })),
-  content: data.Contents?.map(content => content.Key!).filter(key => {
-    return key.toLowerCase().endsWith('jpg') || key.toLowerCase().endsWith('jpeg') || key.toLowerCase().endsWith('png')
-  }),
+  content: data.Contents?.map(content => content.Key!),
 });
 
-export const getFolder = (path: string = ''): Promise<Folder> => {
+export const getFolder = (path: string = ''): Promise<S3Folder> => {
   const params = {
     Bucket: thumbnailBucketName,
     Delimiter: '/',

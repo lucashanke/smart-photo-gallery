@@ -1,10 +1,11 @@
 import React from 'react';
 import path from 'path-browserify';
 import ImageGallery from 'react-image-gallery';
-import { getFolder, getThumbnailUrl, getImageUrl } from '../../aws/s3';
 import { Folder } from '../../models';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
+import { getFolder } from '../../services/galleryService';
+import { getThumbnailUrl } from '../../aws/s3';
 
 const FOLDER_ICON = '/folder.png';
 
@@ -27,13 +28,11 @@ const FolderComponent: React.FunctionComponent = () => {
         setLoading(true);
         const folderReponse = await getFolder(path);
         setFolder(folderReponse);
-        if (folderReponse?.content) {
-            setPhotos(folderReponse.content.filter(key => !key.endsWith('cover.jpg')).map(key => ({
-                original: getImageUrl(key),
-                thumbnail: getThumbnailUrl(key),
-                filename: key.split('/').pop(),
-            })));
-        }
+        setPhotos(folderReponse.photos?.map(photo => ({
+            original: photo.url,
+            thumbnail: photo.thumbnailUrl,
+            filename: photo.filename,
+        })) || []);
         setLoading(false);
     };
 
@@ -49,7 +48,7 @@ const FolderComponent: React.FunctionComponent = () => {
         <ul className="subfolders">
             {folder?.children?.map((child, index) => <li key={child.name}>
                 <Link to={path.join(location.pathname, child.name)}>
-                    <img src={getThumbnailUrl(`${currentPath}${child.name}/cover.jpg`)} onError={(e) => (e.target as HTMLImageElement).src = FOLDER_ICON } alt={child.name} className="cover" id={`cover-${index}`} />
+                    <img src={getThumbnailUrl(`${child.path}cover.jpg`)} onError={(e) => (e.target as HTMLImageElement).src = FOLDER_ICON } alt={child.name} className="cover" id={`cover-${index}`} />
                     {child.name}
                 </Link>
             </li>)}

@@ -1,15 +1,18 @@
 import { isArray } from "util";
 
+export const bucketName = 'test-gallery-photos';
+export const thumbnailBucketName = 'test-gallery-thumbnails';
+
 const mockedBucketContent = {
     'Category 1': {
         'SubCategory 11': ['photo111.jpg'],
-        'SubCategory 12': ['photo121.jpg', 'photo122.jpg'],
+        'SubCategory 12': ['photo121.jpg', 'photo122.jpg', 'cover.jpg'],
     },
     'Category 2': {
         'SubCategory 21': [],
         'SubCategory 22': ['photo221.jpg', 'photo222.jpg', 'photo223.jpg'],
     },
-    'Category 3': ['photo31.jpg', 'photo32.jpg', 'photo33.jpg']
+    'Category 3': ['photo31.jpg', 'photo32.jpg', 'photo33.jpg', 'credits.txt']
 };
 
 const getListObjectsOutput = (prefix?: string): AWS.S3.Types.ListObjectsV2Output => {
