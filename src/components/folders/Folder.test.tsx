@@ -70,4 +70,20 @@ describe('<Folder>', () => {
 
     expect(history.location.hash).toEqual('#photo222.jpg');
   });
+
+  it('shows the credits of the folder when it exists', async () => {
+    render(<MemoryRouter initialEntries={['/Category 3']}><FolderComponent /></MemoryRouter>);
+
+    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+
+    expect(screen.getByTestId('credits')).toBeInTheDocument();
+  });
+
+  it('does not show the credits of the folder when it does not exist', async () => {
+    render(<MemoryRouter initialEntries={['/']}><FolderComponent /></MemoryRouter>);
+
+    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+
+    expect(screen.queryByTestId('credits')).toBeNull();
+  });
 });

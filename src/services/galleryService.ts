@@ -21,7 +21,7 @@ const mapS3FolderToGalleryFolder = (s3folder: S3Folder): Folder => {
     name: s3folder.name,
     photos: s3folder.content?.filter(key => !key.endsWith('cover.jpg') && !key.endsWith('credits.txt')).map(mapS3ItemToPhoto),
     children: s3folder.children?.map(mapS3FolderToGalleryFolder),
-    creditsFilePath: creditsFileKey ? getImageUrl(creditsFileKey) : undefined
+    creditsFileUrl: creditsFileKey ? getImageUrl(creditsFileKey) : undefined
   }
 }
 

@@ -10,7 +10,7 @@ export interface Folder {
     name: string;
     photos?: Photo[];
     children?: Folder[];
-    creditsFilePath?: string;
+    creditsFileUrl?: string;
 }
 
 export interface Photo {

@@ -6,6 +6,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
 import { getFolder } from '../../services/galleryService';
 import { getThumbnailUrl } from '../../aws/s3';
+import Credits from './Credits';
 
 const FOLDER_ICON = '/folder.png';
 
@@ -55,6 +56,8 @@ const FolderComponent: React.FunctionComponent = () => {
         </ul>
 
         <div className="contents">
+            {folder?.creditsFileUrl && <Credits url={folder.creditsFileUrl} />}
+
             {photos.length > 0 && <ImageGallery items={photos} showIndex slideDuration={0} lazyLoad startIndex={getCurrentPhotoIndex()} onBeforeSlide={(nextIndex: number) => {
                 const currentPhoto = photos[nextIndex];
                 history.push({ ...location, hash: `#${currentPhoto.filename}`});

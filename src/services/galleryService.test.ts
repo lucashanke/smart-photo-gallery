@@ -77,7 +77,7 @@ describe('getFolder', () => {
           thumbnailUrl: 'https://test-gallery-thumbnails.s3.amazonaws.com/Category 3/photo33.jpg'
         },
       ],
-      creditsFilePath: 'https://test-gallery-photos.s3.amazonaws.com/Category 3/credits.txt',
+      creditsFileUrl: 'https://test-gallery-photos.s3.amazonaws.com/Category 3/credits.txt',
       children: []
     });
   });
