@@ -7,6 +7,12 @@ import { createMemoryHistory } from 'history';
 jest.mock('../../aws/config');
 
 describe('<Folder>', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+      text: jest.fn().mockResolvedValue('Credits')
+    });
+  });
+
   it('displays a loading message and eventually shows all the subfolders', async () => {
     render(<MemoryRouter><FolderComponent /></MemoryRouter>);
     const loading = screen.getByText(/loading/i);

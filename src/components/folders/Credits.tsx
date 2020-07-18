@@ -3,7 +3,7 @@ import React from 'react';
 const Credits: React.FunctionComponent<{
     url: string;
 }> = (props) => {
-    const [credits, setCredits] = React.useState<string>('Créditos');
+    const [credits, setCredits] = React.useState<string>('');
     
     const fetchCredits = async (url) => {
         const response = await fetch(url);
