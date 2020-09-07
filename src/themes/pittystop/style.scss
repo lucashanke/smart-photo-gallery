@@ -2,6 +2,10 @@ body {
   background: #212121 url('./header.jpg') repeat-x top;
 }
 
+a:hover {
+  color: #00cfdc;
+}
+
 .app {
   margin-top: 400px;
   background: rgba(50,50,50,0.5);
