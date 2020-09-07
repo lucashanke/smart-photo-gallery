@@ -1,37 +1,31 @@
-html {
-  // background: linear-gradient(rgb(42, 82, 123) 0%, rgb(126, 46, 46) 24.37%, #0c2f53 48.32%, #2a5886);
-  background: linear-gradient(#2a527b, #7e2e2e 40.76%, #2a5886);
-  // background: rgb(126, 46, 46);
-  // background: #2A5886;
-}
-
 body {
-  background: url('fotos.jpg') repeat-x top;
+  background: linear-gradient(rgba(126, 46, 46, 0) 16.39%, #7e2e2e 19.75%, rgb(119, 50, 53) 47.48%, #2a5886), url('fotos.jpg') repeat-x top;
 }
 
 header {
-  // background: linear-gradient(rgba(42, 88, 133, 0) 92.86%, rgb(41, 88, 134));
-  // background: linear-gradient(transparent 44.54%, rgb(126, 46, 46) 60.08%);
-  background: linear-gradient(transparent 42.44%, #7e2e2e 55.88%);
-  height: 560px;
   margin: 0 auto;
   text-align: center;
+
+  img {
+    width: 100%;
+  }
 }
 
 a:hover {
   color: #5cafff;
 }
 
-.app {
-  margin: 0 auto;
-  background: rgba(0,0,0,0.5);
-  width: 91vw;
+header, .app {
   max-width: 1310px;
 }
 
-@media screen and (max-width: 1000px) {
-  header {
+.app {
+  margin: -20px auto 0 auto;
+  background: rgba(0,0,0,0.5);
+}
+
+@media screen and (max-width: 1310px) {
+  body {
     background-size: contain;
-    height: 60vw;
   }
 }
