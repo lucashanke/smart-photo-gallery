@@ -7,13 +7,14 @@ import {
 import Folder from './components/folders/Folder';
 
 import './themes/pittystop-2020.1/theme';
-import destaque from './themes/pittystop-2020.1/destaque2.png';
+import destaque from './themes/pittystop-2020.1/header.jpg';
 
 const App: React.StatelessComponent = () => {
   return (
     <Router>
       <header>
         <img src={destaque} alt="" />
+        <div className="overlay"></div>
       </header>
       <div className="app">
         <Switch>
