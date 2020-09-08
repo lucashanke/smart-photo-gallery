@@ -1,13 +1,24 @@
 body {
-  background: linear-gradient(rgba(126, 46, 46, 0) 16.39%, #7e2e2e 19.75%, rgb(119, 50, 53) 47.48%, #2a5886), url('fotos.jpg') repeat-x top;
+  // background: linear-gradient(#2a5886, #7e2e2e 19.33%, #7e2e2e 30.67%, #1f3f5f 37.39%, rgb(19, 39, 60));
+  background: linear-gradient(rgb(42, 88, 134) 0, #2a5886 220px, #7e2e2e 320px, #7e2e2e 500px, #1f3f5f 600px, #13273c)
 }
 
 header {
   margin: 0 auto;
   text-align: center;
+  position: relative;
 
   img {
     width: 100%;
+  }
+
+  .overlay {
+    background: linear-gradient(rgba(43, 87, 133, 0) 92.86%, #2a5886);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 
@@ -20,8 +31,9 @@ header, .app {
 }
 
 .app {
-  margin: -20px auto 0 auto;
-  background: rgba(0,0,0,0.5);
+  margin: 0 auto;
+  width: 100%;
+  background: #2a5886;
 }
 
 @media screen and (max-width: 1310px) {
