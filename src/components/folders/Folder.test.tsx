@@ -15,10 +15,10 @@ describe('<Folder>', () => {
 
   it('displays a loading message and eventually shows all the subfolders', async () => {
     render(<MemoryRouter><FolderComponent /></MemoryRouter>);
-    const loading = screen.getByText(/loading/i);
-    expect(loading).toBeInTheDocument();
+    const loader = screen.getByTestId('loader');
+    expect(loader).toBeInTheDocument();
 
-    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     expect(screen.getByRole('heading')).toHaveTextContent('Categorias');
     expect(screen.getByText(/Category 1/i)).toBeInTheDocument();
@@ -46,8 +46,7 @@ describe('<Folder>', () => {
     ['/Category 1/SubCategory 11', 'SubCategory 11', []],
   ])('loads the folder with the correct prefix when page url is %s', async (pageUrl, expectedHeader, expectedSubFolders) => {
     render(<MemoryRouter initialEntries={[pageUrl]}><FolderComponent /></MemoryRouter>);
-
-    await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     expect(screen.getByRole('heading')).toHaveTextContent(expectedHeader);
     expectedSubFolders.forEach((expectedSubFolder) => {
@@ -60,7 +59,7 @@ describe('<Folder>', () => {
   it('loads the photo gallery when folder has contents', async () => {
     render(<MemoryRouter initialEntries={['/Category 1/SubCategory 11']}><FolderComponent /></MemoryRouter>);
 
-    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     expect(screen.getAllByRole('img')[0]).toHaveAttribute('src', expect.stringContaining('Category 1/SubCategory 11/photo111.jpg'));
   });
@@ -70,7 +69,7 @@ describe('<Folder>', () => {
     history.push('/Category 2/SubCategory 22');
     render(<Router history={history}><FolderComponent /></Router>);
 
-    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     screen.getAllByRole('img')[4].click();
 
@@ -80,7 +79,7 @@ describe('<Folder>', () => {
   it('shows the credits of the folder when it exists', async () => {
     render(<MemoryRouter initialEntries={['/Category 3']}><FolderComponent /></MemoryRouter>);
 
-    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     expect(screen.getByTestId('credits')).toBeInTheDocument();
   });
@@ -88,7 +87,7 @@ describe('<Folder>', () => {
   it('does not show the credits of the folder when it does not exist', async () => {
     render(<MemoryRouter initialEntries={['/']}><FolderComponent /></MemoryRouter>);
 
-    await waitForElementToBeRemoved(() => screen.getByText(/Loading/i));
+    await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
 
     expect(screen.queryByTestId('credits')).toBeNull();
   });

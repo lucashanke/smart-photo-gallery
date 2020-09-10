@@ -41,7 +41,7 @@ const FolderComponent: React.FunctionComponent = () => {
         fetchFolders(currentPath);
     }, [currentPath]);
 
-    return loading ? <span>Loading...</span> : <div className="folder">
+    return loading ? <div className="loader" data-testid="loader">Carregando...</div> : <div className="folder">
         <Breadcrumbs path={folder?.path || ''} />
 
         <h1>{folder?.name || 'Categorias'}</h1>
