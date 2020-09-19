@@ -1,29 +1,25 @@
 body {
-  // background: linear-gradient(#2a5886, #7e2e2e 19.33%, #7e2e2e 30.67%, #1f3f5f 37.39%, rgb(19, 39, 60));
-  background: linear-gradient(rgb(42, 88, 134) 0, #2a5886 220px, #7e2e2e 320px, #7e2e2e 500px, #1f3f5f 600px, #13273c)
+  background: linear-gradient(rgb(42, 88, 134) 0, #2B5A88 220px, #7e2e2e 320px, #7e2e2e 500px, #1f3f5f 600px, #13273c);
+  color: #ddd;
+}
+
+a {
+  color: #fff;
+
+  &:hover {
+    color: #5cafff;
+  }
 }
 
 header {
   margin: 0 auto;
   text-align: center;
   position: relative;
+  margin-bottom: -5px;
 
   img {
     width: 100%;
   }
-
-  .overlay {
-    background: linear-gradient(rgba(43, 87, 133, 0) 92.86%, #2a5886);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-}
-
-a:hover {
-  color: #5cafff;
 }
 
 header, .app {
@@ -33,7 +29,31 @@ header, .app {
 .app {
   margin: 0 auto;
   width: 100%;
-  background: #2a5886;
+  background: linear-gradient(#2B5A88, #13273c);
+  padding: 1px 40px;
+}
+
+.subfolders {
+  li {
+    flex-basis: calc(50% - 40px);
+    margin: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+
+    a {
+      color: #222;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
+
+      a {
+        color: #000;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 1310px) {

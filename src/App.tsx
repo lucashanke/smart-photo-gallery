@@ -14,7 +14,6 @@ const App: React.StatelessComponent = () => {
     <Router>
       <header>
         <img src={destaque} alt="" />
-        <div className="overlay"></div>
       </header>
       <div className="app">
         <Switch>
