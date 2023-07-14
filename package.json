@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.6",
-    "firebase-tools": "^8.13.0"
+    "firebase-tools": "^12.4.4"
   }
 }
